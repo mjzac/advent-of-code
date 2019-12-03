@@ -1,9 +1,7 @@
 # https://adventofcode.com/2019/day/3/
-the_grid = [x[:] for x in [[None] * 20000] * 20000]  # ~3GB memory usage :/
-origin = (6000, 5000)
+the_grid = {}
+origin = (0, 0)
 intersections = []
-
-print("Grid ready")
 
 
 def parse_cmd_to_idx(cmd, curr_x, curr_y):
@@ -28,18 +26,18 @@ def part1(x, y):
 
 
 def part2(x, y, steps):
-    intersections.append(the_grid[x][y][1] + steps)
+    intersections.append(the_grid[(x, y)][1] + steps)
 
 
 def set_point_visited(x, y, wire_number, steps):
     try:
-        current_value = the_grid[x][y]
+        current_value = the_grid.get((x, y), None)
         if current_value is not None and current_value[0] != wire_number:
             part2(x, y, steps)
             # part1(x, y)
-            the_grid[x][y] = "X"
+            the_grid[(x, y)] = "X"
         else:
-            the_grid[x][y] = (wire_number, steps)
+            the_grid[(x, y)] = (wire_number, steps)
     except IndexError:
         print(x, y)
         exit(1)
