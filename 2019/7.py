@@ -15,14 +15,14 @@ def calculate_max_output(settings, feedback_mode=False):
     for setting in settings:
         op = 0
         amplifiers = [Intcode(program, ip_seq=[]) for i in range(5)]
-        first_run = True
+        initialized_phase_setting = False
         while not amplifiers[-1].has_halted():
             for idx, amplifier in enumerate(amplifiers):
-                if first_run:
+                if not initialized_phase_setting:
                     amplifier.add_ip(setting[idx])
                 amplifier.add_ip(op)
                 op = amplifier.execute(feedback_mode=feedback_mode)
-            first_run = False
+            initialized_phase_setting = True
         thrust_signals[setting] = op
     return sorted(thrust_signals.items(), key=lambda x: x[1], reverse=True)[0][1]
 
