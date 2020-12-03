@@ -7,7 +7,8 @@ input_list = list(map(int, get_input(1)))
 target_sum = 2020
 for n in [2, 3]:
     numbers = combinations(input_list, n)
-    result = [
-        reduce(operator.mul, combi, 1) for combi in numbers if sum(combi) == target_sum
+    [
+        print(reduce(operator.mul, combi, 1))
+        for combi in numbers
+        if sum(combi) == target_sum
     ]
-    print(result)
