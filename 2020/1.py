@@ -1,11 +1,13 @@
+from itertools import combinations
 from utils import get_input
+from functools import reduce
+import operator
 
 input_list = list(map(int, get_input(1)))
 target_sum = 2020
-
-for num in input_list:
-    needed_num = abs(target_sum - num)
-    if needed_num in input_list:
-        print("Result {}".format(needed_num * num))
-        break
-
+for n in [2, 3]:
+    numbers = combinations(input_list, n)
+    result = [
+        reduce(operator.mul, combi, 1) for combi in numbers if sum(combi) == target_sum
+    ]
+    print(result)
